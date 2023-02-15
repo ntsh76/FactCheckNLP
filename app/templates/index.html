@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>NLP Fact Checker</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')}}">
+    </head>
+    <body>
+        <h1>Health Claim Fact Checker</h1>
+        <br>
+        <div class="container">
+            <form action="fact-check" method="post">
+                <br>
+                <div class="form_group field">
+                    <input type="text" class="form_field" placeholder="Claim" name="claim_input" id='claim' required/>
+                    <label for="claim" class="form_label">Claim</label>
+                </div>
+                <br>
+                <button type="button" class="collapsible">
+                    Add source
+                    <img src="static/images/up_arrow.svg" class="button_arrow" id="textarea_arrow"/>
+                </button>
+                <div class="content">
+                    <textarea rows="20" placeholder="Paste in an article to check the claim (optional)" class="source_input" name="source_input"></textarea>
+                </div>
+                <br>
+                <br>
+                <a href="/about"><button type="button" class="btn">ABOUT THE MODEL</button></a>
+                <input type="submit" value="CHECK CLAIM" class="btn" id="check">
+            </form>
+        </div>
+        <script src="{{ url_for('static', filename='scripts/app.js')}}"></script>
+    </body>
+</html>
