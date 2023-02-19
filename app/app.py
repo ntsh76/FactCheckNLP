@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, jsonify, redirect, url_for
-from utils.scrape import get_source_text
+from utils.scraper import get_source_text
 from utils.model import model
 
 app = Flask(__name__)
@@ -14,11 +14,14 @@ def index():
 @app.route("/fact-check", methods=["POST", "GET"])
 def check():
     try:
+        # Get user input
         claim = request.form["claim_input"]
-        flash(claim)
         source = request.form["source_input"]
+        # If user did not provide source, get one by searching Google
         if not source:
             source = get_source_text()
+        # Update the result page with user claim
+        flash(claim)
 
         # TODO Put machine learning model here
         result, confidence = model(claim, source)
