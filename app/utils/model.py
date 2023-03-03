@@ -19,3 +19,8 @@ if __name__ == "__main__":
     evidence_text = "Claim is false. Claim is incorrect. Claim is wrong. Claim is bad. Claim is unproven"
     prediction = claim_model.predict(claim_text=claim_text, evidence_text=evidence_text)
     print(prediction)
+
+def model(claim, source):
+    result = random.randint(0,1)
+    confidence = random.uniform(.3,1)
+    return result, confidence
