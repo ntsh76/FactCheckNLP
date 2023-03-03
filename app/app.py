@@ -19,13 +19,19 @@ def check():
         source = request.form["source_input"]
         # If user did not provide source, get one by searching Google
         if not source:
-            source = get_source_text()
+            try:
+                source = get_source_text()
+            except Exception:
+                source = "" 
         # Update the result page with user claim
-        flash(claim)
+        flash("Claim: " + claim)
 
-        # TODO Put machine learning model here
-        result, confidence = model(claim, source)
-        data = {"result": result, "confidence": confidence}
+        # result, confidence, explaination = model(claim, source)
+        result, confidence, explanation = True, 1, "This is true!"
+        if not source:
+            confidence = 0
+            explanation = "No source provided or source lookup failed"
+        data = {"result": result, "confidence": confidence, "explanation": explanation}
 
         return render_template("results.html", data=data)
     except Exception:

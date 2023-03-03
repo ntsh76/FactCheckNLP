@@ -192,6 +192,11 @@ textarea {
     box-shadow: 0 1px 3px rgb(0, 0, 0);
 }
 
+.claim p {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .confidence {
     color: #00ADB5;
     font-size: 100px;

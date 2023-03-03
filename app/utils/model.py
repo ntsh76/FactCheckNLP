@@ -1,6 +1,21 @@
-import random
+from utils.fact_check_nlp.predict import ExplanationModel, ClaimClassificationModel
+
+
+# CLAIM_MODEL_PATH = '/tmp/claim_classification_true_false_distillbert'
+# EXPLANATION_MODEL_PATH = '/tmp/explanation-generation-peagusus-256-64'
+
+# claim_model = ClaimClassificationModel(CLAIM_MODEL_PATH)
+# explanation_model = ExplanationModel(EXPLANATION_MODEL_PATH)
+
 
 def model(claim, source):
-    result = random.randint(0,1)
-    confidence = random.uniform(.3,1)
-    return result, confidence
+    confidence, result = claim_model.predict(claim_text=claim, evidence_text=source)
+    explanation = explanation_model(source)
+    return result, confidence, explanation
+
+
+if __name__ == "__main__":
+    claim_text = "Claim is true"
+    evidence_text = "Claim is false. Claim is incorrect. Claim is wrong. Claim is bad. Claim is unproven"
+    prediction = claim_model.predict(claim_text=claim_text, evidence_text=evidence_text)
+    print(prediction)
