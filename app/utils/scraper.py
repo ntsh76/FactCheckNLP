@@ -11,3 +11,7 @@ def get_source_text(query: str) -> str:
     content = BeautifulSoup(request.content, features="html.parser")
     content = " ".join([p.get_text() for p in content.find_all("p")])
     return content
+
+if __name__ == "__main__":
+    content = get_source_text("Chocolate lowers the risk of cancer")
+    print(content)

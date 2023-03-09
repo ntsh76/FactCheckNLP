@@ -20,21 +20,20 @@ def check():
         # If user did not provide source, get one by searching Google
         if not source:
             try:
-                source = get_source_text()
-            except Exception:
-                source = "" 
+                source = get_source_text(claim)
+            except Exception as e:
+                source = ""
         # Update the result page with user claim
         flash("Claim: " + claim)
 
-        # result, confidence, explaination = model(claim, source)
-        result, confidence, explanation = True, 1, "This is true!"
+        result, confidence, explanation = model(claim, source)
         if not source:
             confidence = 0
             explanation = "No source provided or source lookup failed"
         data = {"result": result, "confidence": confidence, "explanation": explanation}
 
         return render_template("results.html", data=data)
-    except Exception:
+    except Exception as e:
         return redirect(url_for("index"))
 
 

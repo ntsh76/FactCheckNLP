@@ -6,8 +6,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 from nltk.tokenize import sent_tokenize
 from sentence_transformers import SentenceTransformer
 import numpy as np
+import nltk
 from .train import DistillBERTClass
 
+nltk.download('punkt')
 
 class ExplanationModel:
     def __init__(self, model_path):
@@ -75,5 +77,7 @@ class ClaimClassificationModel:
         outputs = self.model(ids, mask).squeeze()
         pred_prob = torch.max(outputs.data).item()
         pred_label = torch.argmax(outputs.data).item()
+        conf = torch.max(torch.softmax(outputs.data, 0)).item()
 
-        return pred_prob, self.id_to_label[pred_label]
+
+        return conf, self.id_to_label[pred_label]

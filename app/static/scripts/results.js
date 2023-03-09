@@ -2,6 +2,9 @@ c = 0.551915024494
 radians = (theta) => theta * Math.PI / 180
 map = (value, min) => value * (285 - 35) / 100 - 35
 degrees = (radians) => radians * (180/ Math.PI)
+if (confidence > 1) {
+  confidence = 1;
+}
 if (confidence < .5) {
     SCORE = 50
 } else {

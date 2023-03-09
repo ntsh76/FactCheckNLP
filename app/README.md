@@ -2,8 +2,7 @@
 
 How to run:
 
-1. Install docker
+1. Install the conda environment from environment.yaml
 2. Navigate to FactCheckNLP/app
-3. run `make up`
-4. The app should be deployed at http://localhost:8080
-5. run `make down` to stop the app
+3. run `python -m flask run "--host=0.0.0.0`
+4. The app should be deployed at http://localhost:5000
