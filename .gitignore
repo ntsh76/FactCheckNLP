@@ -3,3 +3,6 @@
 .pyc
 __pycache__/
 test_trainer/
+**/venv/**
+.vscode/
+.google-cookie
