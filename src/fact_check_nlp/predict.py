@@ -15,11 +15,11 @@ class ExplanationModel:
         self.model = PegasusForConditionalGeneration.from_pretrained(model_path)
 
     def predict(self, input_text) -> str:
-        inputs = self.tokenizer(input_text, return_tensors="pt").input_ids
-        outputs = self.model.generate(inputs,
+        inputs = self.tokenizer(input_text, truncation=True, padding="longest", return_tensors="pt")
+        outputs = self.model.generate(inputs.input_ids,
                                       do_sample=True,
-                                      max_length=50,
-                                      top_k=50,
+                                      max_new_tokens=64,
+                                      top_k=0,
                                       top_p=0.95,
                                       num_return_sequences=1)
 
@@ -58,6 +58,7 @@ class ClaimClassificationModel:
 
     def predict(self, claim_text: str, evidence_text: str) -> str:
         top_k = self._find_top_k(claim_text.lower(), evidence_text.lower())
+
         input_text = str(claim_text.lower() + " " + top_k.lower())
         input_text = " ".join(input_text.split())
         inputs = self.tokenizer.encode_plus(
@@ -73,7 +74,8 @@ class ClaimClassificationModel:
         mask = torch.tensor([inputs['attention_mask']], dtype=torch.long)
 
         outputs = self.model(ids, mask).squeeze()
-        pred_prob = torch.max(outputs.data).item()
+
+        pred_prob = torch.max(torch.softmax(outputs.data, 0)).item()
         pred_label = torch.argmax(outputs.data).item()
 
         return pred_prob, self.id_to_label[pred_label]
